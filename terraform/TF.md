@@ -1,44 +1,59 @@
-Usage: terraform [global options] state show [options] ADDRESS
+# Terraform State & Outputs
 
-  Shows the attributes of a resource in the Terraform state.
+## 🔹 Lab 3: Docker Infrastructure State
 
-  This command shows the attributes of a single resource in the Terraform
-  state. The address argument must be used to specify a single resource.
-  You can view the list of available resources with "terraform state list".
+### **Docker Resources**
 
-Options:
+- **Docker Image**: nginx
+- **Docker Container**: nginx
+- **Container Status**: Running
+- **Exposed Port**: 80
 
-  -state=statefile    Path to a Terraform state file to use to look
-                      up Terraform-managed resources. By default it will
-                      use the state "terraform.tfstate" if it exists.
-docker_container.nginx
-docker_image.nginx
-[33m╷[0m[0m
-[33m│[0m [0m[1m[33mWarning: [0m[0m[1mNo outputs found[0m
-[33m│[0m [0m
-[33m│[0m [0m[0mThe state file either has no outputs defined, or all the defined outputs are empty. Please define an output in your configuration with the `output` keyword and run `terraform refresh` for it to become
-[33m│[0m [0mavailable. If you are using interpolation, please verify the interpolated value is not empty. You can use the `terraform console` command to assist.
-[33m╵[0m[0m
-Usage: terraform [global options] state show [options] ADDRESS
+### **Terraform State**
 
-  Shows the attributes of a resource in the Terraform state.
+```bash
+terraform state list
+```
 
-  This command shows the attributes of a single resource in the Terraform
-  state. The address argument must be used to specify a single resource.
-  You can view the list of available resources with "terraform state list".
+- `docker_image.nginx`
+- `docker_container.nginx`
 
-Options:
+---
 
-  -state=statefile    Path to a Terraform state file to use to look
-                      up Terraform-managed resources. By default it will
-                      use the state "terraform.tfstate" if it exists.
-[33m╷[0m[0m
-[33m│[0m [0m[1m[33mWarning: [0m[0m[1mNo outputs found[0m
-[33m│[0m [0m
-[33m│[0m [0m[0mThe state file either has no outputs defined, or all the defined outputs are empty. Please define an output in your configuration with the `output` keyword and run `terraform refresh` for it to become
-[33m│[0m [0mavailable. If you are using interpolation, please verify the interpolated value is not empty. You can use the `terraform console` command to assist.
-[33m╵[0m[0m
-default_branch = "master"
-repository_id = "S25-core-course-labs"
-repository_name = "S25-core-course-labs"
-repository_url = "https://github.com/MoeJaafar/S25-core-course-labs"
+## 🔹 Lab 4: GitHub Repository State
+
+### **GitHub Repository Details**
+
+- **Default Branch**: master
+- **Repository ID**: S25-core-course-labs
+- **Repository Name**: S25-core-course-labs
+- **Repository URL**: <https://github.com/MoeJaafar/S25-core-course-labs>
+
+---
+
+## 🔹 **Terraform Best Practices Applied**
+
+### **1️⃣ State Management**
+
+✅ Used `terraform state list` and `terraform state show` to track resources.  
+✅ Ensured proper **state file management** to avoid conflicts.  
+
+### **2️⃣ Provider & Authentication**
+
+✅ Used **GitHub provider** securely with an **environment variable for authentication**.  
+✅ Avoided hardcoding secrets in `.tf` files by using **Terraform variables**.  
+
+### **3️⃣ Code Structure & Reusability**
+
+✅ Organized Terraform files (`main.tf`, `provider.tf`, `variables.tf`, `outputs.tf`).  
+✅ Used `variables.tf` to allow **flexibility** and avoid hardcoded values.  
+
+### **4️⃣ Security & Access Control**
+
+✅ Set repository visibility based on **Terraform variables** instead of hardcoding.  
+✅ Disabled **GitHub Advanced Security settings** that were not supported.  
+
+### **5️⃣ Modularity & Reproducibility**
+
+✅ Used `terraform apply -auto-approve` to automate deployments.  
+✅ Ensured **idempotency** so running `terraform apply` doesn’t create duplicates.  
