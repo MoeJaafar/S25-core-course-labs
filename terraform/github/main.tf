@@ -4,10 +4,13 @@ resource "github_repository" "repo" {
   visibility  = var.repo_visibility
   auto_init   = true
 
-
-
   archive_on_destroy = false
+
+  lifecycle {
+    ignore_changes = [vulnerability_alerts]
+  }
 }
+
 
 resource "github_branch_default" "default" {
   repository = github_repository.repo.name
@@ -29,16 +32,15 @@ resource "github_team" "admins" {
 
 resource "github_team_membership" "dev_member" {
   team_id  = github_team.developers.id
-  username = "MoeJaafar"
+  username = "MoeJaafar"  # Assign yourself to Developers
   role     = "member"
 }
 
 resource "github_team_membership" "admin_member" {
   team_id  = github_team.admins.id
-  username = "MoeJaafar"
+  username = "MoeJaafar"  # Assign yourself to Admins
   role     = "maintainer"
 }
-
 
 resource "github_team_repository" "developers_repo_access" {
   team_id    = github_team.developers.id
